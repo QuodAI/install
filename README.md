@@ -89,3 +89,8 @@ echo $SVCRANGE
 #### How do uninstall? 
 
 If you need to reset or start over, run: `sh uninstall.sh`
+
+#### What is the minimum hardward requirement for Kubernetes cluster?
+- 5 vCPUs
+- 10 GB Memory
+- At least 2 nodes with more than 2 vCPUs and 4 GB Memory
