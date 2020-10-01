@@ -4,7 +4,9 @@
 
 Please install the following CLI tools:
 
-- envsubst
+- envsubst (included in gettext package)
+	- Linux: `apt-get install gettext`
+	- MacOS: `brew install gettext`
 - Helm 3
 - kubectl
 
