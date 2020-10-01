@@ -10,36 +10,44 @@ Please install the following CLI tools:
 
 ## Deploy Quod AI
 
-1. Reserve an external IP for VPN connection. See documentation for [Google Cloud](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address), [AWS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html).
+1. Reserve an external IP for VPN connection. 
+
+	See documentation for [Google Cloud](https://cloud.google.com/compute/docs/ip-addresses/reserve-static-external-ip-address), [AWS](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html).
 1. Install Kubernetes 
- 1. Install a Kubernetes cluster on your cloud provider
+	
+	Install a Kubernetes cluster on your cloud provider. The minimum requirement for the cluster is:
+	
+	- 5 vCPUs
+	- 10 GB Memory
+	- At least 2 nodes with more than 2 vCPUs and 4 GB Memory
+		
 1. Deploy Quod AI
- 1. Download the deployment files from [Google Drive](https://drive.google.com/drive/folders/16AhYhBLm_ulZFXuzETAmfiCgjtJrL5nq?usp=sharing). If you don't have permissions to access the folder, please contact [support@quod.ai](mailto:support@quod.ai).
- 1. Connect to your cluster using `kubectl`
- 1. Install Quod AI hybrid on premise:
+	1. Download the deployment files from [Google Drive](https://drive.google.com/drive/folders/16AhYhBLm_ulZFXuzETAmfiCgjtJrL5nq?usp=sharing). If you don't have permissions to access the folder, please contact [support@quod.ai](mailto:support@quod.ai).
+ 	1. Connect to your cluster using `kubectl`
+ 	1. Install Quod AI hybrid on premise:
 
-		Here is a sample command below to install Quod AI. The command will install MySQL, Elasticsearch and OpenVPN.
+	Here is a sample command below to install Quod AI. The command will install MySQL, Elasticsearch and OpenVPN.
 
-		```shellscript
-		MYSQL_PASSWORD=changeme \
-		MYSQL_CLUSTER_IP=10.0.0.1 \
-		ES_CLUSTER_IP=10.0.0.2 \
-		GIT_CLUSTER_IP=10.0.0.3 \
-		OPENVPN_IP=34.87.100.0 \
-		GIT_SERVER_URL=https://gitlab.mycompany.com \
-		sh deploy.sh
-		```
+	```bash
+	MYSQL_PASSWORD=changeme \
+	MYSQL_CLUSTER_IP=10.0.0.1 \
+	ES_CLUSTER_IP=10.0.0.2 \
+	GIT_CLUSTER_IP=10.0.0.3 \
+	OPENVPN_IP=34.87.100.0 \
+	GIT_SERVER_URL=https://gitlab.mycompany.com \
+	sh deploy.sh
+	```
 		
-		**⚠️ Please keep track of the command you run. You will share it with us later. ⚠️**
+	**⚠️ Please keep track of the command you run. You will share it with us later. ⚠️**
 		
-		Where:
+	Where:
 		
-		* `MYSQL_PASSWORD`: new password that will be used when installing MySQL.
-		* `MYSQL_CLUSTER_IP`: internal IP for MySQL.  Must be in the range of service subnet of your Kubernetes cluster. See below for instructions to get range of service subnet.
-		* `ES_CLUSTER_IP`: internal IP for Elasticsearch.  Must be in the range of service subnet of your Kubernetes cluster .
-		* `GIT_CLUSTER_IP`: internal IP for git server proxy.  Must be in the range of service subnet of your Kubernetes cluster.
-		* `OPENVPN_IP`: external IP for OpenVPN server (reserved IP in [Prerequisites](#prerequisites)). We will connect to your cluster through this IP.
-		* `GIT_SERVER_URL`: URL to your self-hosted git server e.g https://gitlab.mycompany.com.
+	* `MYSQL_PASSWORD`: new password that will be used when installing MySQL.
+	* `MYSQL_CLUSTER_IP`: internal IP for MySQL.  Must be in the range of service subnet of your Kubernetes cluster. See below for instructions to get range of service subnet.
+	* `ES_CLUSTER_IP`: internal IP for Elasticsearch.  Must be in the range of service subnet of your Kubernetes cluster .
+	* `GIT_CLUSTER_IP`: internal IP for git server proxy.  Must be in the range of service subnet of your Kubernetes cluster.
+	* `OPENVPN_IP`: external IP for OpenVPN server (reserved IP in [Prerequisites](#prerequisites)). We will connect to your cluster through this IP.
+	* `GIT_SERVER_URL`: URL to your self-hosted git server e.g https://gitlab.mycompany.com.
 		
 	1. Check the deploy status: `kubectl get pods`
 	1. Wait all pods to be successful:
@@ -89,8 +97,3 @@ echo $SVCRANGE
 #### How do uninstall? 
 
 If you need to reset or start over, run: `sh uninstall.sh`
-
-#### What is the minimum hardward requirement for Kubernetes cluster?
-- 5 vCPUs
-- 10 GB Memory
-- At least 2 nodes with more than 2 vCPUs and 4 GB Memory
